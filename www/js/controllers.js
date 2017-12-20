@@ -14,6 +14,14 @@ angular.module('starter')
        console.log(err);
     })
 
+    $scope.recent_posts = [];
+    $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
+      console.log(data);
+      $scope.recent_posts = data.data.posts;
+
+    }, function(err){
+      console.log(err);
+    })
 })
 
 angular.module('starter')
