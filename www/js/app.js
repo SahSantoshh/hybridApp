@@ -22,3 +22,25 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider){
+  $stateProvider
+    .state('main', {
+      url: '/main',
+      templateUrl: 'templates/menu.html',
+      controller: 'MenuCtrl'
+    })
+    .state('main.contentRecent', {
+      url: '/contentRecent',
+      templateUrl: 'templates/menuContent.html',
+      controller: 'MenuCtrl'
+    })
+    .state('main.postDetail', {
+      url: '/postDetail/:postId',
+      templateUrl: 'templates/postDetail.html',
+      controller: 'PostCtrl'
+    })
+
+    $urlRouterProvider.otherwise('/main/contentRecent');
+
+})
