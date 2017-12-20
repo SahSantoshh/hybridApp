@@ -1,5 +1,5 @@
 angular.module('starter')
-.controller('MenuCtrl', function($http,$scope, $sce){
+.controller('MenuCtrl', function($http,$scope, $sce, $ionicScrollDelegate){
 
   $scope.categories = [];
 
@@ -28,9 +28,13 @@ angular.module('starter')
     }, function(err){
       console.log(err);
     })
+
+    $scope.searchTestChanged = function(){
+      $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+    }
 })
 
-angular.module('starter')
+// angular.module('starter')
 .controller('PostCtrl', function(){
 
 })
