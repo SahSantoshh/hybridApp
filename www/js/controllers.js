@@ -49,6 +49,32 @@ angular.module('starter')
       console.log(err);
     })
 
+
+    $scope.canLoadMore = function(){
+      return true;
+    }
+
+
+    $scope.loadMore = function(){
+      $http.get("https://www.scubadivingtheory.com/api/get_posts/?offset="+$scope.offset)
+      .then(function(data){
+
+        var newPosts = data.data.posts;
+        $scope.count_total = data.data.count_total;
+
+            newPosts.forEach(function(element, index, array){
+            element.excerpt = element.excerpt.substr(0,100);
+            element.excerpt = element.excerpt + "... Read More";
+            element.excerpt = $sce.trustAsHtml(element.excerpt);
+        })
+
+        $scope.recent_posts.push.apply($scope.recent_posts, newPosts);
+        $scope.$broadcast("scroll.infinateScrollComplete");
+        $scope.offset += 10;
+
+    });
+    };
+
     $scope.searchTestChanged = function(){
       $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
     }
