@@ -33,7 +33,7 @@ angular.module('starter', ['ionic'])
     .state('main.contentRecent', {
       url: '/contentRecent',
       templateUrl: 'templates/menuContent.html',
-      controller: 'MenuCtrl'
+      controller: 'MainCtrl'
     })
     .state('main.postDetail', {
       url: '/postDetail/:postId',
