@@ -14,6 +14,26 @@ angular.module('starter')
        console.log(err);
     })
 
+    $scope.doRefresh = function(){
+
+      $scope.recent_posts = [];
+      $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
+        console.log(data);
+        $scope.recent_posts = data.data.posts;
+
+        $scope.recent_posts.forEach(function(element, index, array){
+          element.excerpt = element.excerpt.substr(0,100);
+          element.excerpt = element.excerpt + "... Read More";
+          element.excerpt = $sce.trustAsHtml(element.excerpt);
+        })
+
+        $scope.$broadcast('scroll.refreshComplete');
+
+      }, function(err){
+        console.log(err);
+      })
+
+    }
     $scope.recent_posts = [];
     $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
       console.log(data);

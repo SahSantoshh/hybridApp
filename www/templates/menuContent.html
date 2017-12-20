@@ -24,6 +24,11 @@
   </div>
 
   <ion-content class="has-subheader" delegate-handle="mainScroll">
+<ion-refresher
+  pulling-text="Pull to refresh"
+  on-refresh="doRefresh()">
+</ion-refresher>
+
     <ion-list can-swipe="true">
       <ion-item class="item item-thumbnail-left item-text-wrap item-icon-right" ng-repeat="post in recent_posts | filter: {title: searchText}">
         <img src="{{ post.thumbnail }}"/>
