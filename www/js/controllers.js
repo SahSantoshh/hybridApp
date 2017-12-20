@@ -2,6 +2,8 @@ angular.module('starter')
 .controller('MenuCtrl', function($http,$scope, $sce, $ionicScrollDelegate){
 
   $scope.categories = [];
+  $scope.offset = 0;
+  $scope.count_total =1; 
 
   $http.get("https://www.scubadivingtheory.com/api/get_category_index/").then(
     function(returnedData){
@@ -20,7 +22,7 @@ angular.module('starter')
       $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
         console.log(data);
         $scope.recent_posts = data.data.posts;
-
+        $scope.count_total = data.data.count_total;
         $scope.recent_posts.forEach(function(element, index, array){
           element.excerpt = element.excerpt.substr(0,100);
           element.excerpt = element.excerpt + "... Read More";
@@ -37,8 +39,9 @@ angular.module('starter')
     $scope.recent_posts = [];
     $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
       console.log(data);
-      $scope.recent_posts = data.data.posts;
 
+      $scope.recent_posts = data.data.posts;
+      $scope.count_total = data.data.count_total;
       $scope.recent_posts.forEach(function(element, index, array){
         element.excerpt = element.excerpt.substr(0,100);
         element.excerpt = element.excerpt + "... Read More";
@@ -54,25 +57,33 @@ angular.module('starter')
       return true;
     }
 
+    $scope.timer = new Date().getTime();
+    $scope.lastTimer = new Date().getTime();
 
     $scope.loadMore = function(){
-      $http.get("https://www.scubadivingtheory.com/api/get_posts/?offset="+$scope.offset)
-      .then(function(data){
+      $scope.timer = new Date().getTime();
 
-        var newPosts = data.data.posts;
-        $scope.count_total = data.data.count_total;
+      if(new Date($scope.timer - $scope.lastTimer) > 5000){
+        $scope.lastTimer = new Date().getTime();
+        $http.get("https://www.scubadivingtheory.com/api/get_posts/?offset="+$scope.offset)
+        .then(function(data){
 
-            newPosts.forEach(function(element, index, array){
-            element.excerpt = element.excerpt.substr(0,100);
-            element.excerpt = element.excerpt + "... Read More";
-            element.excerpt = $sce.trustAsHtml(element.excerpt);
-        })
+          var newPosts = data.data.posts;
+          $scope.count_total = data.data.count_total;
 
-        $scope.recent_posts.push.apply($scope.recent_posts, newPosts);
-        $scope.$broadcast("scroll.infinateScrollComplete");
-        $scope.offset += 10;
+              newPosts.forEach(function(element, index, array){
+              element.excerpt = element.excerpt.substr(0,100);
+              element.excerpt = element.excerpt + "... Read More";
+              element.excerpt = $sce.trustAsHtml(element.excerpt);
+          })
 
-    });
+          $scope.recent_posts.push.apply($scope.recent_posts, newPosts);
+          $scope.$broadcast("scroll.infinateScrollComplete");
+          $scope.offset += 10;
+
+      });
+      }
+
     };
 
     $scope.searchTestChanged = function(){
