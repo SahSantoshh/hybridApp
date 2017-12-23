@@ -94,7 +94,43 @@ angular.module('starter')
   }
 })
 
-// angular.module('starter')
-.controller('PostCtrl', function(){
+.controller('PostCtrl',function () {
+    $http.get('http://inabath.org/api/get_post/?id='+ $stateParams.postId).then(
+        function(data){
+            $scope.post_title = data.data.post.title;
+            $scope.post_category = data.data.post.categories[0].title ? data.data.post.categories[0]
+                    .title : 'No Category';
+            $scope.post_content = $sce.trustAsHtml(data.data.post.content);
+            $scope.post_date = data.data.post.date;
+            $scope.post_authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
+            if($scope.post_authorName.trim() == '')
+                $scope.post_authorName = "No Name";
+            $scope.post_authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
+            $scope.post_image = data.data.post.thumbnail_images.full.url;
+            $scope.post_commentCount = data.data.post.comment_count;
+            $scope.post_views = data.data.post.custom_fields.post_views_count[0];
+            $scope.post_url = data.data.post.url;
+        }, function(err){
 
+        })
 })
+// .controller('PostCtrl', function(){
+//   $http.get('https://www.scubadivingtheory.com/api/get_post/?id='+$stateParams.postId).then(
+//     function(data)){
+//       $scope.post_title = data.data.post.title;
+//             $scope.post_category = data.data.post.categories[0].title ? data.data.post.categories[0]
+//                     .title : 'No Category';
+//             $scope.post_content = $sce.trustAsHtml(data.data.post.content);
+//             $scope.post_date = data.data.post.date;
+//             $scope.post_authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
+//             if($scope.post_authorName.trim() == '')
+//                 $scope.post_authorName = "No Name";
+//             $scope.post_authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
+//             $scope.post_image = data.data.post.thumbnail_images.full.url;
+//             $scope.post_commentCount = data.data.post.comment_count;
+//             $scope.post_views = data.data.post.custom_fields.post_views_count[0];
+//             $scope.post_url = data.data.post.url;
+//     },function(err){
+//
+//     })
+// })
