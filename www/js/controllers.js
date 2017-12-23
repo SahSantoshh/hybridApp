@@ -94,8 +94,8 @@ angular.module('starter')
   }
 })
 
-.controller('PostCtrl',function () {
-    $http.get('http://inabath.org/api/get_post/?id='+ $stateParams.postId).then(
+.controller('PostCtrl',function ($http,$scope, $sce, $ionicScrollDelegate, $timeout, $stateParams) {
+    $http.get('https://www.scubadivingtheory.com/api/get_post/?id='+ $stateParams.postId).then(
         function(data){
             $scope.post_title = data.data.post.title;
             $scope.post_category = data.data.post.categories[0].title ? data.data.post.categories[0]
