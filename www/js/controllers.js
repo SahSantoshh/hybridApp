@@ -114,23 +114,23 @@ angular.module('starter')
 
         })
 })
-// .controller('PostCtrl', function(){
-//   $http.get('https://www.scubadivingtheory.com/api/get_post/?id='+$stateParams.postId).then(
-//     function(data)){
-//       $scope.post_title = data.data.post.title;
-//             $scope.post_category = data.data.post.categories[0].title ? data.data.post.categories[0]
-//                     .title : 'No Category';
-//             $scope.post_content = $sce.trustAsHtml(data.data.post.content);
-//             $scope.post_date = data.data.post.date;
-//             $scope.post_authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
-//             if($scope.post_authorName.trim() == '')
-//                 $scope.post_authorName = "No Name";
-//             $scope.post_authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
-//             $scope.post_image = data.data.post.thumbnail_images.full.url;
-//             $scope.post_commentCount = data.data.post.comment_count;
-//             $scope.post_views = data.data.post.custom_fields.post_views_count[0];
-//             $scope.post_url = data.data.post.url;
-//     },function(err){
-//
-//     })
-// })
+
+.controller('CatCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout, $stateParams){
+  $scope.doRefresh = function(){
+    $http.get('https://www.scubadivingtheory.com/api/get_category_posts/?id=' + $stateParams.catId).then(
+      function(data){
+        $scope.category_posts = data.data.posts;
+        $scope.category_posts.forEach(function(element, index, array){
+          element.excerpt = element.excerpt.substr(0,100);
+          element.excerpt = element.excerpt + '...Read More';
+          element.excerpt = $sce.trustAsHtml(element.excerpt);
+        })
+        $scope.category_title = data.data.category.title;
+        $scope.$broadcast('scroll.refreshComplete');
+
+      }, function(err){
+
+      })
+  }
+  $scope.doRefresh();
+})
