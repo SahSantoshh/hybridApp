@@ -12,7 +12,7 @@ angular.module('starter')
     }, function(err){
        console.log(err);
     })
-
+} // added this closing bracket
 
 .controller('MainCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout){
 
