@@ -12,7 +12,7 @@ angular.module('starter')
     }, function(err){
        console.log(err);
     })
-} // added this closing bracket
+}) // added this closing bracket
 
 .controller('MainCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout){
 
@@ -69,22 +69,22 @@ angular.module('starter')
     if(new Date($scope.timer - $scope.lastTimer) > 5000){
       $scope.lastTimer = new Date().getTime();
       $http.get("https://www.scubadivingtheory.com/api/get_posts/?offset="+$scope.offset)
-      .then(function(data){
+        .then(function(data){
 
-        var newPosts = data.data.posts;
-        $scope.count_total = data.data.count_total;
+            var newPosts = data.data.posts;
+            $scope.count_total = data.data.count_total;
 
             newPosts.forEach(function(element, index, array){
-            element.excerpt = element.excerpt.substr(0,100);
-            element.excerpt = element.excerpt + "... Read More";
-            element.excerpt = $sce.trustAsHtml(element.excerpt);
-        })
+                element.excerpt = element.excerpt.substr(0,100);
+                element.excerpt = element.excerpt + "... Read More";
+                element.excerpt = $sce.trustAsHtml(element.excerpt);
+            })
 
-        $scope.recent_posts.push.apply($scope.recent_posts, newPosts);
-        $scope.$broadcast("scroll.infinateScrollComplete");
-        $scope.offset += 10;
+            $scope.recent_posts.push.apply($scope.recent_posts, newPosts);
+            $scope.$broadcast("scroll.infinateScrollComplete");
+            $scope.offset += 10;
 
-    });
+        });
     }
 
   };
@@ -92,8 +92,6 @@ angular.module('starter')
   $scope.searchTestChanged = function(){
     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
   }
-})
-
 })
 
 // angular.module('starter')
