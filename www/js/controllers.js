@@ -39,6 +39,10 @@ angular.module('starter')
     })
 
   }
+
+  if(!$scope.Favorites)
+      $scope.Favorites = [];
+
   $scope.recent_posts = [];
   $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
     console.log(data);
@@ -91,6 +95,26 @@ angular.module('starter')
 
   $scope.searchTestChanged = function(){
     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+  }
+
+  $scope.toggleFavorite = function(post){
+
+    post.isFavorite = !post.isFavorite;
+
+    if(post.isFavorite == true)
+    {
+      $scope.Favorites.push(post.id);
+    }
+    else
+    {
+        $scope.Favorites.forEach(function(e , i, a){
+          if(e == post.id)
+          {
+            $scope.Favorites.splice(i, 1);
+            console.log("Splicaed index " + i);
+          }
+      })
+    }
   }
 })
 

@@ -34,9 +34,11 @@
         <img ng-src="{{ post.thumbnail }}"/>
         <h2>{{ post.title }}</h2>
         <p ng-bind-html="post.excerpt"></p>
-        <ion-option-button class="button-dark">
+
+        <ion-option-button class="button-dark" ng-click="toggleFavorite(post)">
           <i class="icon ion-heart"></i>
         </ion-option-button>
+
       </ion-item>
     </ion-list>
     <ion-infinate-scroll ng-if="canLoadMore()"
