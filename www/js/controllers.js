@@ -137,6 +137,9 @@ angular.module('starter')
         }, function(err){
 
         })
+        $scope.Share = function(){
+          window.plugins.socialsharing.share($scope.post_title, $scope.post_title, $scope.post_image, $scope.post_url);
+        }
 })
 
 .controller('CatCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout, $stateParams){
