@@ -14,7 +14,7 @@
         <ion-item ng-repeat="category in categories" menu-close href="
         #/main/contentByCategory/{{category.id}}">
           <span ng-bind-html="category.title"></span><span class="badge badge-
-          assertive">{‌{ category.post_count}}</span>
+          assertive">{{category.post_count}}</span>
         </ion-item>
       </ion-list>
     </ion-content>
