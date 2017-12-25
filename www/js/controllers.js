@@ -14,14 +14,13 @@ angular.module('starter')
     })
 }) // added this closing bracket
 
-.controller('MainCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout){
+.controller('MainCtrl', function($http,$scope, $sce, $ionicScrollDelegate, $timeout, $localStorage){
 
   $scope.offset = 0;
   $scope.count_total =1;
 
   $scope.doRefresh = function(){
-
-    $scope.recent_posts = [];
+  $scope.recent_posts = [];
     $http.get("https://www.scubadivingtheory.com/api/get_posts/").then(function(data){
       console.log(data);
       $scope.recent_posts = data.data.posts;
@@ -30,6 +29,11 @@ angular.module('starter')
         element.excerpt = element.excerpt.substr(0,100);
         element.excerpt = element.excerpt + "... Read More";
         element.excerpt = $sce.trustAsHtml(element.excerpt);
+        if($scope.Favorites.indexOf(element.id) != -1)
+          element.isFavorite = true;
+          else {
+            element.isFavorite = false;
+          }
       })
 
       $scope.$broadcast('scroll.refreshComplete');
@@ -40,6 +44,7 @@ angular.module('starter')
 
   }
 
+  $scope.Favorites = $localStorage.Favorites;
   if(!$scope.Favorites)
       $scope.Favorites = [];
 
@@ -115,6 +120,7 @@ angular.module('starter')
           }
       })
     }
+    $localStorage.Favorites = $scope.Favorites;
   }
 })
 
