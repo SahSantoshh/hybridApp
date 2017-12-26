@@ -10,35 +10,35 @@
 	<ion-header-bar class="bar bar-positive">
 		<div class="title"><center>{{ post_category }} </center></div>
 	</ion-header-bar>
-	<div class="bar bar-subheader"><center> {{ post_title }} </center> </div>
+	<div class="bar bar-subheader"><center><h5> {{ post_title }} </h5></center> </div>
 
 	<ion-content class="has-subheader">
 		<div class="list card">
 
-			<div class="item item-avatar">
+			<!-- <div class="item item-avatar">
 				<img ng-src="{{ post_authorImage }}"/>
 				<h2>{{ post_authorName }}</h2>
 				<p>{{ post_date }}</p>
-			</div>
+			</div> -->
 
 			<div class="item item-body">
 				<img class="full-image" src="{{ post_image }}"/>
 				<p ng-bind-html="post_content"></p>
 				<p>
-					<a href="#" class="subdued"> {{ post_commentCount }} Comments</a>
-					<a href="#" class="subdued"> {{ post_views }} Views</a>
+					<!-- <a href="#" class="subdued"> {{ post_commentCount }} Comments</a> -->
+					<!-- <a href="#" class="subdued"> {{ post_views }} Views</a> -->
 				</p>
 			</div>
 
 			<div class="item tabs tabs-secondary tabs-icon-left">
-				<a class="tab-item" href="#">
+				<!-- <a class="tab-item" href="#">
 			      <i class="icon ion-thumbsup"></i>
 			      Like
-			    </a>
-			    <a class="tab-item" href="#">
+			    </a> -->
+			    <!-- <a class="tab-item" href="#">
 			      <i class="icon ion-chatbox"></i>
 			      Comment
-			    </a>
+			    </a> -->
 			    <a class="tab-item" ng-click="Share();">
 			      <i class="icon ion-share"></i>
 			      Share
