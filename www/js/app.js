@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
 
-  .run(function ($ionicPlatform, $rootScope, FileSys, $q,$filter) {
+  .run(function ($ionicPlatform, $rootScope, FileSys, $q, $filter) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -29,29 +29,36 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
     $rootScope.mainPosts = [];
     $rootScope.sIds = [];
     $rootScope.id = {
-      "id":"",
+      "id": "",
     };
+    $rootScope.gotId = false;
 
     $rootScope.insertData = function (fileName, data) {
       FileSys.insertData(fileName, data);
     }
 
     $rootScope.insertPostId = function (oneId) {
-      FileSys.checkFile("posts.json").then(function(success){
-        $rootScope.fetchData("posts.json").then(function(data){
+      FileSys.checkFile("posts.json").then(function (success) {
+        $rootScope.fetchData("posts.json").then(function (data) {
           $rootScope.sIds = JSON.parse(data);
-          var isId = $filter('filter')($rootScope.sIds, {id: oneId}, true)[0];
-          
-          if(isId.id != oneId){
+        
+          $rootScope.sIds.forEach(element =>{
+            if(element.id == oneId){
+              $rootScope.gotId = true;
+              // break;
+            }
+          })
+
+          if(!$rootScope.gotId){
             $rootScope.id.id = oneId;
             $rootScope.sIds.push($rootScope.id);
-            $rootScope.insertData("posts.json",$rootScope.sIds);
+            $rootScope.insertData("posts.json", $rootScope.sIds);
           }
         });
-      },function(error){
+      }, function (error) {
         $rootScope.id.id = oneId;
         $rootScope.sIds.push($rootScope.id);
-        $rootScope.insertData("posts.json",$rootScope.sIds);
+        $rootScope.insertData("posts.json", $rootScope.sIds);
       });
     }
 
@@ -64,22 +71,22 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
       });
     }
 
+    $rootScope.mainPosts1 = [];
+    $rootScope.sIds1 = [];
 
-    $rootScope.getPostIds = function(){
-      return $q(function(resolve,reject){
-        $rootScope.fetchData("posts.json").then(function(success){ //fetches all posts id in posts.json file
-          $rootScope.sIds = JSON.parse(success); //split them in array
+    $rootScope.getPostIds = function () {
+      return $q(function (resolve, reject) {
+        $rootScope.fetchData("posts.json").then(function (success) { //fetches all posts id in posts.json file
+          $rootScope.sIds1 = JSON.parse(success); //split them in array
 
-          $rootScope.sIds.forEach(element => {
-            FileSys.checkFile(element.id+$rootScope.postFile).then(function(success){ //check every file with the id
-              if(success){
-                $rootScope.fetchData(element.id+$rootScope.postFile).then(function(success){ //fetched data of checked file
-                  $rootScope.mainPosts.push(JSON.parse(success));// if file found then added them in array
+          $rootScope.sIds1.forEach(element => {
+            FileSys.checkFile(element.id + $rootScope.postFile).then(function (checked) { //check every file with the id
+                $rootScope.fetchData(element.id + $rootScope.postFile).then(function (data) { //fetched data of checked file
+                  $rootScope.mainPosts1.push(JSON.parse(data));// if file found then added them in array
                 });
-              }
             });
           });
-          resolve($rootScope.mainPosts); //returened all posts id
+          resolve($rootScope.mainPosts1); //returened all posts id
         });
       });
     }
