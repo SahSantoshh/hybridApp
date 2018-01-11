@@ -8,25 +8,25 @@
 	</ion-nav-bar>
 
 	<ion-header-bar class="bar bar-positive">
-		<div class="title"><center>{{ post_category }} </center></div>
+		<div class="title"><center>{{ post.post_category }} </center></div>
 	</ion-header-bar>
-	<div class="bar bar-subheader"><center><h5> {{ post_title }} </h5></center> </div>
+	<div class="bar bar-subheader"><center><h5> {{ post.post_title }} </h5></center> </div>
 
 	<ion-content class="has-subheader">
 		<div class="list card">
 
 			<!-- <div class="item item-avatar">
-				<img ng-src="{{ post_authorImage }}"/>
-				<h2>{{ post_authorName }}</h2>
-				<p>{{ post_date }}</p>
+				<img ng-src="{{ post.post_authorImage }}"/>
+				<h2>{{ post.post_authorName }}</h2>
+				<p>{{ post.post_date }}</p>
 			</div> -->
 
 			<div class="item item-body">
-				<img class="full-image" src="{{ post_image }}"/>
-				<p ng-bind-html="post_content"></p>
+				<img class="full-image" src="{{ post.post_image }}"/>
+				<p ng-bind-html="post.post_content"></p>
 				<p>
-					<!-- <a href="#" class="subdued"> {{ post_commentCount }} Comments</a> -->
-					<!-- <a href="#" class="subdued"> {{ post_views }} Views</a> -->
+					<!-- <a href="#" class="subdued"> {{ post.post_commentCount }} Comments</a> -->
+					<!-- <a href="#" class="subdued"> {{ post.post_views }} Views</a> -->
 				</p>
 			</div>
 
