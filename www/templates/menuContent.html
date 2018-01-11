@@ -32,7 +32,6 @@
 				<img ng-src="{{ post.thumbnail }}"/>
 				<h2>{{ post.title }}</h2>
 				<p align="justify" ng-bind-html="post.excerpt"></p>
-				<!-- <p ng-if="!post.expert" ng-bind-html="post.content"></p> -->
 				
 				<button class="button icon ion-heart button-clear" ng-class="{'button-assertive':post.isFavorite}"></button>
 				<ion-option-button class="button-dark" ng-click="toggleFavorite(post)">

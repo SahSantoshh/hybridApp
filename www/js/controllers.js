@@ -149,9 +149,8 @@ angular.module('starter')
 		// 		$scope.count_total = $scope.mainPosts.length;
 
 		// 		$scope.recent_posts.forEach(function (element, index, array) {
-		// 			element.content = element.content.substr(0, 100);
-		// 			element.content = element.content + "... Read More";
-		// 			element.content = $sce.trustAsHtml(element.content);
+		// 			element.excerpt = element.excerpt + "... Read More";
+		// 			element.excerpt = $sce.trustAsHtml(element.excerpt);
 		// 			if ($scope.Favorites.indexOf(element.id) != -1)
 		// 				element.isFavorite = true;
 		// 			else
@@ -176,6 +175,7 @@ angular.module('starter')
 			"commentCount": "",
 			"views": "",
 			"url": "",
+			"excerpt":"",
 		}
 
 		$http.get('https://www.scubadivingtheory.com/api/get_post/?id=' + $stateParams.postId).then(
@@ -207,6 +207,9 @@ angular.module('starter')
 				$scope.post.commentCount = data.data.post.comment_count;
 				// $scope.post.views = data.data.post.custom_fields.post_views_count[0];
 				$scope.post.url = data.data.post.url;
+				var details = data.data.post.content;
+				$scope.post.content = details;
+				$scope.post.excerpt = details.substr(0,100);
 
 				$rootScope.insertPostId($scope.post.id);
 				$rootScope.insertData($scope.post.id + $rootScope.postFile, $scope.post);
@@ -219,11 +222,11 @@ angular.module('starter')
 		// show if offline,check offline
 		// uncomment below codes if devise is offline
 
-		// $rootScope.delay(function () {
-		// 	$rootScope.fetchData($stateParams.postId + $rootScope.postFile).then(function (data) {
-		// 		$scope.post = JSON.parse(data);
-		// 	});
-		// }, 5000);
+		$rootScope.delay(function () {
+			$rootScope.fetchData($stateParams.postId + $rootScope.postFile).then(function (data) {
+				$scope.post = JSON.parse(data);
+			});
+		}, 5000);
 
 		$scope.Share = function () {
 			window.plugins.socialsharing.share($scope.title, $scope.title, $scope.image, $scope.url);
