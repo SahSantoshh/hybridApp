@@ -12,22 +12,22 @@ angular.module('starter')
 				})
 				console.log(returnedData);
 				// caches categories
-				$rootScope.insertData($rootScope.catFile, $scope.categories);
+				// $rootScope.insertData($rootScope.catFile, $scope.categories);
 
 			}, function (err) {
 				console.log(err);
 			});
 
 
-		$rootScope.delay(function () {
-			$rootScope.fetchData($rootScope.catFile).then(function (data) {
-				$scope.categories = JSON.parse(data);
-				$scope.categories.forEach(function (element, index, array) {
-					// check that title is object
-					element.title = $sce.trustAsHtml(JSON.stringify(element.title));
-				});
-			});
-		}, 5000);
+		// $rootScope.delay(function () {
+		// 	$rootScope.fetchData($rootScope.catFile).then(function (data) {
+		// 		$scope.categories = JSON.parse(data);
+		// 		$scope.categories.forEach(function (element, index, array) {
+		// 			// check that title is object
+		// 			element.title = $sce.trustAsHtml(JSON.stringify(element.title));
+		// 		});
+		// 	});
+		// }, 5000);
 
 	})
 
