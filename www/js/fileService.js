@@ -8,7 +8,6 @@
         return {
             insertData: insertData,
             getData: getData,
-            insertPostId: insertPostId,
             checkFile: checkFile,
         };
 
@@ -26,17 +25,6 @@
             })
         }
 
-        function insertPostId(data) {
-            $cordovaFile.writeFile(cordova.file.dataDirectory, "posts.json", JSON.stringify(data) + ",", {append: true, replace: false})
-                .then(function (success) {
-                    // success
-                    console.log("post id inserted success");
-                }, function (error) {
-                    // error
-                    console.log("post id inserted fails");
-
-                });
-        }
 
         function insertData(fileName, data) {
             $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, JSON.stringify(data), true)

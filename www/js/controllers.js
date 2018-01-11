@@ -141,24 +141,24 @@ angular.module('starter')
 		// show local posts
 		// show if offline,check offline
 		// uncomment below codes if devise is offline
-		// $scope.recent_posts = [];
-		// $rootScope.delay(function () {
+		$scope.recent_posts = [];
+		$rootScope.delay(function () {
 
-		// 	$rootScope.getPostIds().then(function (success) {
-		// 		$scope.recent_posts = success;
-		// 		$scope.count_total = $scope.mainPosts.length;
+			$rootScope.getPostIds().then(function (success) {
+				$scope.recent_posts = success;
+				$scope.count_total = $scope.mainPosts.length;
 
-		// 		$scope.recent_posts.forEach(function (element, index, array) {
-		// 			element.excerpt = element.excerpt + "... Read More";
-		// 			element.excerpt = $sce.trustAsHtml(element.excerpt);
-		// 			if ($scope.Favorites.indexOf(element.id) != -1)
-		// 				element.isFavorite = true;
-		// 			else
-		// 				element.isFavorite = false;
-		// 		});
-		// 	});
+				$scope.recent_posts.forEach(function (element, index, array) {
+					element.excerpt = element.excerpt + "... Read More";
+					element.excerpt = $sce.trustAsHtml(element.excerpt);
+					if ($scope.Favorites.indexOf(element.id) != -1)
+						element.isFavorite = true;
+					else
+						element.isFavorite = false;
+				});
+			});
 
-		// }, 5000);
+		}, 5000);
 	})
 
 	.controller('PostCtrl', function ($scope, $http, $stateParams, $sce, $rootScope) {

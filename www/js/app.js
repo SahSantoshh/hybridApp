@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
 
-  .run(function ($ionicPlatform, $rootScope, FileSys, $q) {
+  .run(function ($ionicPlatform, $rootScope, FileSys, $q,$filter) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,19 +20,39 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
-      
+
     });
 
 
     $rootScope.catFile = "cats.json";
     $rootScope.postFile = "_post.json";
+    $rootScope.mainPosts = [];
+    $rootScope.sIds = [];
+    $rootScope.id = {
+      "id":"",
+    };
 
     $rootScope.insertData = function (fileName, data) {
       FileSys.insertData(fileName, data);
     }
 
-    $rootScope.insertPostId = function (data) {
-      FileSys.insertPostId(data);
+    $rootScope.insertPostId = function (oneId) {
+      FileSys.checkFile("posts.json").then(function(success){
+        $rootScope.fetchData("posts.json").then(function(data){
+          $rootScope.sIds = JSON.parse(data);
+          var isId = $filter('filter')($rootScope.sIds, {id: oneId}, true)[0];
+          
+          if(isId.id != oneId){
+            $rootScope.id.id = oneId;
+            $rootScope.sIds.push($rootScope.id);
+            $rootScope.insertData("posts.json",$rootScope.sIds);
+          }
+        });
+      },function(error){
+        $rootScope.id.id = oneId;
+        $rootScope.sIds.push($rootScope.id);
+        $rootScope.insertData("posts.json",$rootScope.sIds);
+      });
     }
 
     $rootScope.fetchData = function (fileName) {
@@ -44,19 +64,16 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
       });
     }
 
-    $rootScope.mainPosts = [];
-    $rootScope.sIds = [];
-    $rootScope.post = {};
 
     $rootScope.getPostIds = function(){
       return $q(function(resolve,reject){
         $rootScope.fetchData("posts.json").then(function(success){ //fetches all posts id in posts.json file
-          $rootScope.sIds = success.split(','); //split them in array
+          $rootScope.sIds = JSON.parse(success); //split them in array
 
           $rootScope.sIds.forEach(element => {
-            FileSys.checkFile(element+$rootScope.postFile).then(function(success){ //check every file with the id
+            FileSys.checkFile(element.id+$rootScope.postFile).then(function(success){ //check every file with the id
               if(success){
-                $rootScope.fetchData(element+$rootScope.postFile).then(function(success){ //fetched data of checked file
+                $rootScope.fetchData(element.id+$rootScope.postFile).then(function(success){ //fetched data of checked file
                   $rootScope.mainPosts.push(JSON.parse(success));// if file found then added them in array
                 });
               }
