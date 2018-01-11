@@ -31,7 +31,7 @@ angular.module('starter')
 
 	})
 
-	.controller('MainCtrl', function ($http, $scope,$rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading) {
+	.controller('MainCtrl', function ($http, $scope, $rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading) {
 
 		$scope.offset = 0;
 		$scope.count_total = 1;
@@ -140,91 +140,93 @@ angular.module('starter')
 
 		// show local posts
 		// show if offline,check offline
+		// uncomment below codes if devise is offline
 		// $scope.recent_posts = [];
 		// $rootScope.delay(function () {
-		// 	$rootScope.getPostIds().then(function(success){
+
+		// 	$rootScope.getPostIds().then(function (success) {
 		// 		$scope.recent_posts = success;
 		// 		$scope.count_total = $scope.mainPosts.length;
-	
-		// 		$scope.recent_posts.forEach(function(element,index,array){
-		// 			element.excerpt = element.post_content.substr(0, 100);
-		// 			element.excerpt = element.excerpt + "... Read More";
-		// 			element.excerpt = $sce.trustAsHtml(element.excerpt);
+
+		// 		$scope.recent_posts.forEach(function (element, index, array) {
+		// 			element.content = element.content.substr(0, 100);
+		// 			element.content = element.content + "... Read More";
+		// 			element.content = $sce.trustAsHtml(element.content);
 		// 			if ($scope.Favorites.indexOf(element.id) != -1)
 		// 				element.isFavorite = true;
 		// 			else
 		// 				element.isFavorite = false;
 		// 		});
 		// 	});
+
 		// }, 5000);
-
-
-		
-
-
 	})
 
 	.controller('PostCtrl', function ($scope, $http, $stateParams, $sce, $rootScope) {
 
 		$scope.post = {
-			"post_id": "",
-			"post_title": "",
-			"post_category": "",
-			"post_content": "",
-			"post_date": "",
-			"post_authorName": "",
-			"post_authorImage": "",
-			"post_image": "",
-			"post_commentCount": "",
-			"post_views": "",
-			"post_url": "",
+			"id": "",
+			"title": "",
+			"category": "",
+			"content": "",
+			"date": "",
+			"authorName": "",
+			"authorImage": "",
+			"image": "",
+			"commentCount": "",
+			"views": "",
+			"url": "",
 		}
 
 		$http.get('https://www.scubadivingtheory.com/api/get_post/?id=' + $stateParams.postId).then(
 			function (data) {
-				// $scope.post_title = data.data.post.title;
-				// $scope.post_category = data.data.post.categories[0].title ? data.data.post.categories[0]
+				// $scope.title = data.data.post.title;
+				// $scope.category = data.data.post.categories[0].title ? data.data.post.categories[0]
 				// 	.title : 'No Category';
-				// $scope.post_content = $sce.trustAsHtml(data.data.post.content);
-				// $scope.post_date = data.data.post.date;
-				// $scope.post_authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
-				// if ($scope.post_authorName.trim() == '')
-				// 	$scope.post_authorName = "No Name";
-				// $scope.post_authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
-				// $scope.post_image = data.data.post.thumbnail_images.full.url;
-				// $scope.post_commentCount = data.data.post.comment_count;
-				// $scope.post_views = data.data.post.custom_fields.post_views_count[0];
-				// $scope.post_url = data.data.post.url;
+				// $scope.content = $sce.trustAsHtml(data.data.post.content);
+				// $scope.date = data.data.post.date;
+				// $scope.authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
+				// if ($scope.authorName.trim() == '')
+				// 	$scope.authorName = "No Name";
+				// $scope.authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
+				// $scope.image = data.data.post.thumbnail_images.full.url;
+				// $scope.commentCount = data.data.post.comment_count;
+				// $scope.views = data.data.post.custom_fields.post_views_count[0];
+				// $scope.url = data.data.post.url;
 
-				$scope.post.post_id = data.data.post.id;
-				$scope.post.post_title = data.data.post.title;
-				$scope.post.post_category = data.data.post.categories[0].title ? data.data.post.categories[0].title : 'No Category';
-				$scope.post.post_content = $sce.trustAsHtml(data.data.post.content);
-				$scope.post.post_date = data.data.post.date;
-				$scope.post.post_authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
-				if ($scope.post.post_authorName.trim() == '')
-					$scope.post.post_authorName = "No Name";
-				$scope.post.post_authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
-				$scope.post.post_image = data.data.post.thumbnail_images.full.url;
-				$scope.post.post_commentCount = data.data.post.comment_count;
-				// $scope.post.post_views = data.data.post.custom_fields.post_views_count[0];
-				$scope.post.post_url = data.data.post.url;
+				$scope.post.id = data.data.post.id;
+				$scope.post.title = data.data.post.title;
+				$scope.post.category = data.data.post.categories[0].title ? data.data.post.categories[0].title : 'No Category';
+				$scope.post.content = $sce.trustAsHtml(data.data.post.content);
+				$scope.post.date = data.data.post.date;
+				$scope.post.authorName = data.data.post.author.first_name + " " + data.data.post.author.last_name;
+				if ($scope.post.authorName.trim() == '')
+					$scope.post.authorName = "No Name";
+				$scope.post.authorImage = 'http://ionicframework.com/img/docs/mcfly.jpg';
+				$scope.post.image = data.data.post.thumbnail_images.full.url;
+				$scope.post.commentCount = data.data.post.comment_count;
+				// $scope.post.views = data.data.post.custom_fields.post_views_count[0];
+				$scope.post.url = data.data.post.url;
 
-				$rootScope.insertPostId($scope.post.post_id);
-				$rootScope.insertData($scope.post.post_id + $rootScope.postFile, $scope.post);
+				$rootScope.insertPostId($scope.post.id);
+				$rootScope.insertData($scope.post.id + $rootScope.postFile, $scope.post);
 
 			}, function (err) {
 
 			})
 
-		$rootScope.delay(function () {
-			$rootScope.fetchData($stateParams.postId + $rootScope.postFile).then(function (data) {
-				$scope.post = JSON.parse(data);
-			});
-		}, 5000);
+				// show local posts
+		// show if offline,check offline
+		// uncomment below codes if devise is offline
+
+		// $rootScope.delay(function () {
+		// 	$rootScope.fetchData($stateParams.postId + $rootScope.postFile).then(function (data) {
+		// 		$scope.post = JSON.parse(data);
+		// 	});
+		// }, 5000);
 
 		$scope.Share = function () {
-			window.plugins.socialsharing.share($scope.post_title, $scope.post_title, $scope.post_image, $scope.post_url);
+			window.plugins.socialsharing.share($scope.title, $scope.title, $scope.image, $scope.url);
 		}
 
 	})

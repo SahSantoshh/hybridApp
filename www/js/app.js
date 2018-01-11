@@ -60,7 +60,7 @@ angular.module('starter', ['ionic', 'ngStorage', 'ngCordova'])
                   $rootScope.mainPosts.push(JSON.parse(success));// if file found then added them in array
                 });
               }
-            })
+            });
           });
           resolve($rootScope.mainPosts); //returened all posts id
         });

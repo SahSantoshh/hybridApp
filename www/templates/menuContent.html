@@ -31,7 +31,8 @@
 			<ion-item class="item item-thumbnail-left item-text-wrap item-icon-right" ng-repeat="post in recent_posts | filter: {title: searchText}" href="#/main/postDetail/{{post.id}}">
 				<img ng-src="{{ post.thumbnail }}"/>
 				<h2>{{ post.title }}</h2>
-				<p ng-bind-html="post.excerpt"></p>
+				<p align="justify" ng-bind-html="post.excerpt"></p>
+				<!-- <p ng-if="!post.expert" ng-bind-html="post.content"></p> -->
 				
 				<button class="button icon ion-heart button-clear" ng-class="{'button-assertive':post.isFavorite}"></button>
 				<ion-option-button class="button-dark" ng-click="toggleFavorite(post)">
