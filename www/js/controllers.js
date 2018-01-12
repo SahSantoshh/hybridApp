@@ -31,7 +31,7 @@ angular.module('starter')
 
 	})
 
-	.controller('MainCtrl', function ($http, $scope, $rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading) {
+	.controller('MainCtrl', function ($http, $scope,$ionicPlatform,$cordovaNetwork, $rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading) {
 
 		$scope.offset = 0;
 		$scope.count_total = 1;
@@ -141,24 +141,31 @@ angular.module('starter')
 		// show local posts
 		// show if offline,check offline
 		// uncomment below codes if devise is offline
-		$scope.recent_posts = [];
-		$rootScope.delay(function () {
 
-			$rootScope.getPostIds().then(function (success) {
-				$scope.recent_posts = success;
-				$scope.count_total = $scope.mainPosts.length;
+		$ionicPlatform.ready(function () {
+		// $rootScope.delay(function () {
+			var isNet = $cordovaNetwork.isOnline();
+			if (!isNet) {
+				alert("Devise is offline");
+				$scope.recent_posts = [];
 
-				$scope.recent_posts.forEach(function (element, index, array) {
-					element.excerpt = element.excerpt + "... Read More";
-					element.excerpt = $sce.trustAsHtml(element.excerpt);
-					if ($scope.Favorites.indexOf(element.id) != -1)
-						element.isFavorite = true;
-					else
-						element.isFavorite = false;
+				$rootScope.getPostIds().then(function (success) {
+					$scope.recent_posts = success;
+					$scope.count_total = $scope.mainPosts.length;
+
+					$scope.recent_posts.forEach(function (element, index, array) {
+						element.excerpt = element.excerpt + "... Read More";
+						element.excerpt = $sce.trustAsHtml(element.excerpt);
+						if ($scope.Favorites.indexOf(element.id) != -1)
+							element.isFavorite = true;
+						else
+							element.isFavorite = false;
+					});
 				});
-			});
+			}//offline ends
 
-		}, 5000);
+		})
+		// }, 5000);
 	})
 
 	.controller('PostCtrl', function ($scope, $http, $stateParams, $sce, $rootScope) {
@@ -175,7 +182,7 @@ angular.module('starter')
 			"commentCount": "",
 			"views": "",
 			"url": "",
-			"excerpt":"",
+			"excerpt": "",
 		}
 
 		$http.get('https://www.scubadivingtheory.com/api/get_post/?id=' + $stateParams.postId).then(
@@ -209,7 +216,7 @@ angular.module('starter')
 				$scope.post.url = data.data.post.url;
 				var details = data.data.post.content;
 				$scope.post.content = details;
-				$scope.post.excerpt = details.substr(0,100);
+				$scope.post.excerpt = details.substr(0, 100);
 
 				$rootScope.insertPostId($scope.post.id);
 				$rootScope.insertData($scope.post.id + $rootScope.postFile, $scope.post);
@@ -218,7 +225,7 @@ angular.module('starter')
 
 			})
 
-				// show local posts
+		// show local posts
 		// show if offline,check offline
 		// uncomment below codes if devise is offline
 
