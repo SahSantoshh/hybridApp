@@ -147,6 +147,12 @@ angular.module('starter')
 			var isNet = $cordovaNetwork.isOnline();
 			if (!isNet) {
 				alert("Devise is offline");
+
+				$ionicPopup.confirm({
+					title: "No Internet Connection",
+					content: "Connect to receive all articles."
+				})
+
 				$scope.recent_posts = [];
 
 				$rootScope.getPostIds().then(function (success) {
