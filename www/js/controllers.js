@@ -31,7 +31,8 @@ angular.module('starter')
 
 	})
 
-	.controller('MainCtrl', function ($http,$ionicPopup, $scope,$ionicPlatform,$cordovaNetwork, $rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading) {
+
+	.controller('MainCtrl', function ($http, $scope,$ionicPlatform,$cordovaNetwork, $rootScope, $sce, $ionicScrollDelegate, $timeout, $localStorage, $ionicLoading,$ionicPopup) {
 
 		$scope.offset = 0;
 		$scope.count_total = 1;
